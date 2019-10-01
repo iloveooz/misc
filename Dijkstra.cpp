@@ -7,8 +7,8 @@ int main() {
 	srand(static_cast<int>(time(nullptr)));
 
 	int matrix[SIZE][SIZE]; // матрица связей
-	int d[SIZE]; // минимальное расстояние
-	int v[SIZE]; // посещенные вершины
+	int distance[SIZE]; // минимальное расстояние
+	int vertex[SIZE]; // посещенные вершины
 
 	int temp, minindex, min;
 	int begin_index = 0;
@@ -19,7 +19,7 @@ int main() {
 	for (int i = 0; i < SIZE; i++) {
 		matrix[i][i] = 0;
 		for (int j = i + 1; j < SIZE; j++) {
-			std::cout << "Введите расстояние (" << (i + 1) << " - " << (j + 1) << "): ";
+			std::cout << "Расстояние (" << (i + 1) << " - " << (j + 1) << "): ";
 			temp = rand() % 98 + 1;
 			std::cout << temp << std::endl;
 			matrix[i][j] = temp;
@@ -36,11 +36,11 @@ int main() {
 
 	//Инициализация вершин и расстояний
 	for (int i = 0; i < SIZE; i++) {
-		d[i] = 10000;
-		v[i] = 1;
+		distance[i] = 10000;
+		vertex[i] = 1;
 	}
 
-	d[begin_index] = 0;
+	distance[begin_index] = 0;
 
 	// Шаг алгоритма
 	do {
@@ -49,9 +49,9 @@ int main() {
 
 		for (int i = 0; i < SIZE; i++) {
 			// Если вершину ещё не обошли и вес меньше min
-			if ((v[i] == 1) && (d[i]<min)) { 
+			if ((vertex[i] == 1) && (distance[i] < min)) { 
 				// Переприсваиваем значения
-				min = d[i];
+				min = distance[i];
 				minindex = i;
 			}
 		}
@@ -61,12 +61,12 @@ int main() {
 			for (int i = 0; i < SIZE; i++) {
 				if (matrix[minindex][i] > 0) {
 					temp = min + matrix[minindex][i];
-					if (temp < d[i]) {
-						d[i] = temp;
+					if (temp < distance[i]) {
+						distance[i] = temp;
 					}
 				}
 			}
-			v[minindex] = 0;
+			vertex[minindex] = 0;
 		}
 	} 
 	while (minindex < 10000);
@@ -74,7 +74,7 @@ int main() {
 	// Вывод кратчайших расстояний до вершин
 	std::cout << '\n' << "Кратчайшие расстояния до вершин" << '\n';
 	for (int i = 0; i < SIZE; i++)
-		std::cout << d[i] << '\t';
+		std::cout << distance[i] << '\t';
 	std::cout << std::endl;
 
 	// Восстановление пути
@@ -82,13 +82,13 @@ int main() {
 	int end = 4; // индекс конечной вершины = 5 - 1
 	ver[0] = end + 1; // начальный элемент - конечная вершина
 	int k = 1; // индекс предыдущей вершины
-	int weight = d[end]; // вес конечной вершины
+	int weight = distance[end]; // вес конечной вершины
 
 	while (end != begin_index) { // пока не дошли до начальной вершины
 		for (int i = 0; i < SIZE; i++) // просматриваем все вершины
 		if (matrix[end][i] != 0) { // если связь есть
 			int temp = weight - matrix[end][i]; // определяем вес пути из предыдущей вершины
-			if (temp == d[i]) { // если вес совпал с рассчитанным, значит из этой вершины и был переход
+			if (temp == distance[i]) { // если вес совпал с рассчитанным, значит из этой вершины и был переход
 				weight = temp; // сохраняем новый вес
 				end = i;       // сохраняем предыдущую вершину
 				ver[k] = i + 1; // и записываем ее в массив
