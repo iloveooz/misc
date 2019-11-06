@@ -137,5 +137,73 @@ return (GetTotal() > 21);
 }
 
 void GenericPlayer::Bust() const {
-	std::cout << m Name << " busts.\n";
+	std::cout << m_Name << " busts.\n";
+}
+
+class Player : public GenericPlayer {
+public:
+	Player(const std::string& name = "");
+	virtual ~Player();
+	// показывает, хочет ли игрок продолжать брать карты
+	virtual bool IsHitting() const;
+	// объявляет, что игрок победил
+	void Win() const;
+	// объявляет, что игрок проиграл
+	void Lose() const;
+	// объявляет ничью
+	void Push() const;
+};
+
+Player::Player (const std::string& name) : GenericPlayer(name)
+{}
+
+Player::~Player()
+{}
+
+bool Player::IsHitting() const {
+	std::cout << m_Name << ". Do you want a hit? (Y/N): ";
+	char response;
+	std::cin >> response;
+	return (response == 'y' || response == 'Y');
+}
+
+void Player::Win() const {
+	std::cout << m_Name << " wins. \n";
+}
+
+void Player::Lose() const {
+	std::cout << m_Name << " loses. \n";
+}
+
+void Player::Push() const {
+	std::cout << m_Name << " pushes. \n";
+}
+
+class House : public GenericPlayer {
+public:
+	House(const std::string& name = "House");
+	virtual ~House();
+	// показывает, хочет ли игрок продолжать брать карты
+	virtual bool IsHitting() const;
+	// переворачивает первую карту
+	void FlipFirstCard();
+};
+
+House::House(const std::string& name) : GenericPlayer(name)
+{}
+
+House::~House()
+{}
+
+bool House::IsHitting() const {
+return (GetTotal() <= 16);
+}
+
+void House::FlipFirstCard() {
+	if (!m_Cards.empty()) {
+		m_Cards[0]->Flip();
+	}
+	else {
+		std::cout << "No card to flip!\n";
+	}
 }
