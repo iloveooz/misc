@@ -310,6 +310,7 @@ void Game::Plау() {
 	std::cout << std::endl << m_House;
 	// раздает дилеру дополнительные карты
 	m_Deck.AdditionalCards(m_House);
+
 	if (m_House.IsBusted()) {
 		// все, кто остался в игре, побеждают
 		for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) {
@@ -350,7 +351,7 @@ int main() {
 	std::cout << "\t\tWelcome to Blackjack!\n\n";
 	int numPlayers = 0;
 	while (numPlayers < 1 || numPlayers > 7) {
-		std::cout << "How many players? С1 - 7): ";
+		std::cout << "How many players? (1 - 7): ";
 		std::cin >> numPlayers;
 	}
 	std::vector<std::string> names;
@@ -374,9 +375,9 @@ int main() {
 
 	
 // перегружает оператор <<, чтобы получить возможность отправить объект типа Card в поток std::cout
-std::ostream& operator<<(std::ostream& os, const Card& aCard) {
-	const std::string RANKS[] ={"0", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-	const std::string SUITS[] ={"c", "d", "h", "s"};
+std::ostream& operator << (std::ostream& os, const Card& aCard) {
+	const std::string RANKS[] = { "0", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+	const std::string SUITS[] = { "c", "d", "h", "s" };
 	if (aCard.m_IsFaceUp) {
 		os << RANKS[aCard.m_Rank] << SUITS[aCard.m_Suit];
 	}
@@ -387,7 +388,7 @@ std::ostream& operator<<(std::ostream& os, const Card& aCard) {
 }
 
 // перегружает оператор <<, чтобы получить возможность отправить объект типа GenericPlayer в поток std::cout
-std::ostream& operator<<(std::ostream& os, const GenericPlayer& aGenericPlayer) {
+std::ostream& operator << (std::ostream& os, const GenericPlayer& aGenericPlayer) {
 	os << aGenericPlayer.m_Name << ":\t";
 	std::vector<Card *>::const_iterator pCard;
 	if (!aGenericPlayer.m_Cards.empty()) {
