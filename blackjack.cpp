@@ -110,3 +110,32 @@ int Hand::GetTotal() const {
 		return total;
 	}
 }
+
+class GenericPlayer : public Hand {
+	friend std::ostream& operator << (std::ostream& os, const GenericPlayer& aGenericPlayer);
+public:
+	GenericPlayer(const std::string& name = "");
+	virtual ~GenericPlayer();
+	// показывает, хочет ли игрок продолжать брать карты
+	virtual bool IsHitting() const = 0;
+	// возвращает значение, если игрок имеет перебор - сумму очков, большую 21
+	bool IsBusted() const;
+	// объявляет, что игрок имеет перебор
+	void Bust() const;
+protected:
+	std::string m_Name;
+};
+
+GenericPlayer::GenericPlayer(const std::string& name): m_Name(name)
+{}
+
+GenericPlayer::~GenericPlayer()
+{}
+
+bool GenericPlayer::IsBusted() const {
+return (GetTotal() > 21);
+}
+
+void GenericPlayer::Bust() const {
+	std::cout << m Name << " busts.\n";
+}
