@@ -74,7 +74,7 @@ void Hand::Clear() {
 	std::vector<Card*>::iterator iter = m_Cards.begin();
 	for (iter = m_Cards.begin(); iter != m_Cards.end(); ++iter) {
 		delete *iter;
-		*iter = nullptr;
+		*iter = 0;
 	}
 	// очищает вектор указателей
 	m_Cards.clear();
@@ -107,8 +107,8 @@ int Hand::GetTotal() const {
 	if (containsAce && total <= 11)	{
 		// добавляем только 10 очков, поскольку мы уже добавили за каждый туз по одному очку
 		total += 10;
-		return total;
 	}
+	return total;
 }
 
 class GenericPlayer : public Hand {
