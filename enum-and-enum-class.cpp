@@ -1,16 +1,18 @@
+#include <iostream>
+
 int main() {
-    enum Fruits {
+    enum class Fruits {
         LEMON,
         KIWI
     };
 
-    enum Colors {
+    enum class Colors {
         PINK,
         GRAY
     };
 
-    Fruits fruit = LEMON;
-    Colors color = PINK;
+    Fruits fruit = Fruits::LEMON;
+    Colors color = Colors::PINK;
 
     if (fruit == color)
         std::cout << "fruit and color are equal\n";
