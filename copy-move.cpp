@@ -2,7 +2,7 @@
 
 class Coord2D {
 public:
-    Coord2D() {
+    Coord2D() { // default constructor
         m_x = 0;
         m_y = 0;
         std::cout << "Coord2D(x = " << m_x << ", y = " << m_y << ") created." << std::endl;
@@ -14,7 +14,7 @@ public:
         std::cout << "Coord2D(x = " << m_x << ", y = " << m_y << ") created." << std::endl;
     }
     
-    Coord2D(const Coord2D& object) {
+    Coord2D(const Coord2D& object) { // copy constructor
 		m_x = object.m_x;
 		m_y = object.m_y;
 		std::cout << "Coord2D(x = " << m_x << ", y = " << m_y << ") copied." << std::endl;
@@ -26,20 +26,21 @@ public:
         std::cout << "Coord2D(x = " << m_x << ", y = " << m_y << ") moved" << std::endl;
     }
 	
-	Coord2D& operator = (const Coord2D& obj) {
+	Coord2D& operator = (const Coord2D& obj) { // copy assigment
         m_x = obj.m_x;
         m_y = obj.m_y;
         std::cout << "Coord2D(x = " << m_x << ", y = " << m_y << ") copy-assigned" << std::endl;
         return *this;
     }
     
-    Coord2D& operator = (Coord2D&& obj) {
+    Coord2D& operator = (Coord2D&& obj) { // move assigment
         m_x = obj.m_x;
         m_y = obj.m_y;
         std::cout << "Coord2D(x = " << m_x << ", y = " << m_y << ") move-assigned" << std::endl;
         return *this;
     }    
 
+	// perfect forwarding
     template<class T>
     friend Coord2D operator + (T&& a, const Coord2D& b) {
         std::cout << "Creating `Coord2D t`..." << std::endl;
@@ -59,7 +60,7 @@ public:
     }
 
 
-    ~Coord2D() {
+    ~Coord2D() { // destructor
         std::cout << "Coord2D(x = " << m_x << ", y = " << m_y << ") destroyed." << std::endl;
     }
 
